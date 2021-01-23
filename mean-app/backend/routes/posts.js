@@ -30,7 +30,7 @@ router.post(
   "",
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
-    const url = req.protocol + "://" + req.get("post");
+    const url = req.protocol + "://" + req.get("host");
     const post = new Post({
       title: req.body.title,
       content: req.body.content,
@@ -68,11 +68,17 @@ router.delete("/:id", (req, res, next) => {
   });
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", multer(storage).single("image"), (req, res, next) => {
+  let imagePath = req.body.imagePath;
+  if (req.title) {
+    const url = req.protocol + "://" + req.get("host");
+    imagePath = url + "/images/" + req.file.filename;
+  }
   const post = new Post({
     _id: req.body.id,
     title: req.body.title,
     content: req.body.content,
+    imagePath: imagePath,
   });
   Post.updateOne({ _id: req.params.id }, post).then((result) => {
     console.log(result);

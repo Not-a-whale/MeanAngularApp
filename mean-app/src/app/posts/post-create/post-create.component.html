@@ -6,7 +6,6 @@
         matInput
         type="text"
         formControlName="title"
-        [ngModel]="post?.title"
         placeholder="Post Title"
       />
       <mat-error *ngIf="form.get('title').invalid"
@@ -27,7 +26,6 @@
         matInput
         rows="4"
         formControlName="content"
-        [ngModel]="post?.content"
         placeholder="Post Content"
       ></textarea>
       <mat-error *ngIf="form.get('content').invalid"
