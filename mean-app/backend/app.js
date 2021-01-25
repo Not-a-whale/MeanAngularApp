@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require("mongoose");
 
 const postsRoutes = require("./routes/posts");
+const userRoutes = require("./routes/user");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
