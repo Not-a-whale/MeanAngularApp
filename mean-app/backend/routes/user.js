@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 router.post("/signup", (req, res, next) => {
-  console.log(req);
   bcrypt.hash(req.body.password, 10).then((hash) => {
     const user = new User({
       email: req.body.email,
@@ -19,11 +18,6 @@ router.post("/signup", (req, res, next) => {
           message: "user created",
           result: result,
         });
-        const token = jwt.sign(
-          { email: user.email, userId: user._id },
-          "secret_this_should_be_longer",
-          { expiresIn: "1h" }
-        );
       })
       .catch((err) => {
         res.status(500).json({
@@ -34,21 +28,35 @@ router.post("/signup", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
+  let fetchedUser;
+  console.log(req);
   User.findOne({ email: req.body.email })
     .then((user) => {
+      console.log(user);
       if (!user) {
         return res.status(401).json({
           message: "Auth failed",
         });
       }
+      fetchedUser = user;
       return bcrypt.compare(req.body.password, user.password);
     })
     .then((result) => {
-      return res.status(401).json({
-        message: "Auth failed",
+      if (!result) {
+        return res.status(401).json({
+          message: "Auth failed",
+        });
+      }
+      const token = jwt.sign(
+        { email: fetchedUser.email, userId: fetchedUser._id },
+        "secret_this_should_be_longer",
+        { expiresIn: "1h" }
+      );
+      res.status(200).json({
+        token: token,
       });
     })
-    .catch(() => {
+    .catch((err) => {
       return res.status(401).json({
         message: "Auth failed",
       });
