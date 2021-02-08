@@ -32,6 +32,7 @@ import { ErrorComponent } from './error/error.component';
     PostListComponent,
     LoginComponent,
     SignupComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +49,6 @@ import { ErrorComponent } from './error/error.component';
     MatPaginatorModule,
     FormsModule,
     MatDialogModule,
-    ErrorComponent,
   ],
   providers: [
     PostsService,
