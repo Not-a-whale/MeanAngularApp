@@ -47,12 +47,14 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+    console.log(this.userId);
   }
 
   onDelete(id: string) {
     this.isLoading = true;
     this.postsService.deletePost(id).subscribe(() => {
       this.postsService.getPosts(this.postsPerPage, this.currentPage);
+      this.isLoading = false;
     });
   }
 
