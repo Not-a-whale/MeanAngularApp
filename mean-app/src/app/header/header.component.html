@@ -12,10 +12,16 @@
       >
     </li>
     <li *ngIf="!userIsAuthenticated">
-      <a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
+      <a mat-button routerLink="/auth/login" routerLinkActive="mat-accent"
+        >Login</a
+      >
     </li>
     <li *ngIf="!userIsAuthenticated">
-      <button mat-button routerLink="/signup" routerLinkActive="mat-accent">
+      <button
+        mat-button
+        routerLink="/auth/signup"
+        routerLinkActive="mat-accent"
+      >
         Signup
       </button>
     </li>
